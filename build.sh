@@ -3,6 +3,11 @@ Name="wms-test"
 MainPath="cmd/main/main.go"
 Org="thingple"
 
+echo "================================git"
+echo git rev-list --tags --max-count=1
+echo git describe --tags $(git rev-list --tags --max-count=1)
+echo "================================git"
+
 # shellcheck disable=SC2046
 Version=$(git describe --tags $(git rev-list --tags --max-count=1))
 # shellcheck disable=SC2154

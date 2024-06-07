@@ -1,7 +1,7 @@
 #!/bin/bash
 Name="wms-test"
 MainPath="cmd/main/main.go"
-Org="cloudbyte.top"
+Org="thingple"
 
 # shellcheck disable=SC2046
 Version=$(git describe --tags $(git rev-list --tags --max-count=1))

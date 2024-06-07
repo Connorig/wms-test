@@ -1,19 +1,42 @@
+#name: Docker Image CI
+#
+#on:
+#  #  push:
+#  #    branches: [ "main" ]
+#  #  pull_request:
+#  #    branches: [ "main" ]
+#  push:
+#    tags: ["v*"]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Build the Docker image
+#        #      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+#        run: ./build.sh build && ./build.sh push
+
 name: Docker Image CI
 
-on:
-  #  push:
-  #    branches: [ "main" ]
-  #  pull_request:
-  #    branches: [ "main" ]
+on: # 监听的动作，只要有push tag到远程仓库的请求，就会出触发jobs。
   push:
-    tags:
-      -v*
+    tags: [ "v*" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+
+  build: # 构建镜像
+    runs-on: ubuntu-latest # 基础镜像
+
+    steps: # 多步骤执行
+      - uses: actions/checkout@v3
       - name: Build the Docker image
-        #      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-        run: ./build.sh build && ./build.sh push
+        run: |
+          ./build.sh
+      #           执行项目中的.build.sh脚本，用于制作该项目的docker镜像。
+      - name: Push
+        run: |
+          docker version
+          #           登陆远程docker.hub 进行镜像的推送
+          docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+          ./build.sh push

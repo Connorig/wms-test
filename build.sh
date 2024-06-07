@@ -4,8 +4,8 @@ MainPath="cmd/main/main.go"
 Org="thingple"
 
 echo "================================git"
-echo git rev-list --tags --max-count=1
-echo git describe --tags $(git rev-list --tags --max-count=1)
+git rev-list --tags --max-count=1
+git describe --tags $(git rev-list --tags --max-count=1)
 echo "================================git"
 
 # shellcheck disable=SC2046
@@ -14,17 +14,17 @@ Version=$(git describe --tags $(git rev-list --tags --max-count=1))
 GitCommit=$(git log --pretty=format:"%h" -1)
 BuildTime=$(date +%FT%T%z)
 
-build_image(){
+build_image() {
   git checkout "${Version}"
   docker build -t "${Org}/${Name}:${Version}" \
-  --build-arg NAME="${Name}" \
-  --build-arg VERSION="${Version}" \
-  --build-arg BUILD_TIME="${BuildTime}" \
-  --build-arg COMMIT="${GitCommit}" \
-  --build-arg MAIN_PATH="${MainPath}" .
+    --build-arg NAME="${Name}" \
+    --build-arg VERSION="${Version}" \
+    --build-arg BUILD_TIME="${BuildTime}" \
+    --build-arg COMMIT="${GitCommit}" \
+    --build-arg MAIN_PATH="${MainPath}" .
 }
 
-print_app_info(){
+print_app_info() {
   echo "****************************************"
   echo "App:${Org}:${Name}"
   echo "Version:${Version}"
@@ -35,7 +35,7 @@ print_app_info(){
   echo ""
 }
 
-push_image(){
+push_image() {
   echo "****************************************"
   echo "Push:${Org}:${Name}:${Version}"
   echo "****************************************"
@@ -45,11 +45,11 @@ push_image(){
 
 print_app_info
 
-case  $1 in
-    push)
-		push_image
-        ;;
-    *)
-		build_image
-        ;;
+case $1 in
+push)
+  push_image
+  ;;
+*)
+  build_image
+  ;;
 esac

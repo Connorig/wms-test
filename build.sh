@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "=========================================> build.sh"
 Name="wms-test"
 MainPath="cmd/main/main.go"
 Org="cloudbyte.top"

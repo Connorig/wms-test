@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Domingor/go-blackbox"
 	"github.com/Domingor/go-blackbox/server/apploader"
+	"github.com/Domingor/go-blackbox/version"
 	"github.com/Domingor/wms-test/config"
 )
 
@@ -15,6 +16,8 @@ import (
 
 func main() {
 	var config config.Config
+	version.AppName = "wms-test"
+	version.Version = "v1.1.0"
 
 	debugLevel := "debug"
 	port := ":8811"
@@ -31,5 +34,4 @@ func main() {
 			EnableWeb(timeFormate, port, debugLevel, nil)
 		return nil
 	})
-
 }

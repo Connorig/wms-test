@@ -5,6 +5,8 @@ Org="thingple"
 
 echo "================================git"
 git branch
+git rev-list --tags
+
 echo $(git rev-list --tags --max-count=1)
 echo $(git describe --tags $(git rev-list --tags --max-count=1))
 echo "================================git"

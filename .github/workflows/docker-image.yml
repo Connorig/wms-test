@@ -17,7 +17,7 @@
 #      - name: Push
 #        run: | # 登陆远程docker.hub 进行镜像的推送
 #          docker version
-#          docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+#          docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin=${{ secrets.DOCKER_PASSWORD }}
 #          ./build.sh push
 
 name: Docker Image CI
@@ -35,6 +35,6 @@ jobs:
       - name: Build the Docker image
         run: ./build.sh
       - name: Login in Dockerhub
-        run: docker login --username=thingple --password=123456
+        run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
       - name: Push Docker image
         run: ./build.sh push
